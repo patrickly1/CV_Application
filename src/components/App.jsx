@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import FormSection from "./Form";
+import "../styles/styles.css";
 
 function App() {
+    const [submittedData, setSubmittedData] = useState({});
+
+    function handleSubmit(data) {
+        setSubmittedData(prevData => ({
+            ...prevData,
+            ...data
+        }));
+    }
+
+    function handleReset(fields) {
+        setSubmittedData(prevData => {
+            const newData = { ...prevData };
+            fields.forEach(field => {
+                delete newData[field.name];
+            });
+            return newData;
+        });
+    }
+    
     const personalFields = [
         { name: 'firstName', placeholder: 'First Name'},
         { name: 'lastName', placeholder: 'Last Name'},
@@ -23,10 +43,31 @@ function App() {
     ]
 
     return (
-        <div>
-            <FormSection title="Personal Information" fields={personalFields}></FormSection>
-            <FormSection title="Education" fields={educationFields}></FormSection>
-            <FormSection title="Work" fields={workFields}></FormSection>
+        <div className="container">
+            <div className="form-container">
+            <FormSection 
+                title="Personal Information" 
+                fields={personalFields} 
+                onSubmit={handleSubmit} 
+                onReset={handleReset}>
+            </FormSection>
+            <FormSection 
+                title="Education" 
+                fields={educationFields} 
+                onSubmit={handleSubmit} 
+                onReset={handleReset}>
+                </FormSection>
+            <FormSection 
+            title="Work" 
+            fields={workFields} 
+            onSubmit={handleSubmit} 
+            onReset={handleReset}>
+            </FormSection>
+            </div>
+            <div className='output-container'>
+                <h1>Submitted Data</h1>
+                <p>{Object.values(submittedData).join(' ')}</p>
+            </div>
         </div>
     )
 }

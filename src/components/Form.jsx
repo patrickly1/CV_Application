@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function FormSection({title, fields}) {
+function FormSection({title, fields, onSubmit, onReset}) {
     const [formData, setFormData] = useState(
         fields.reduce((acc, field) => {
             acc[field.name] = '';
@@ -8,7 +8,6 @@ function FormSection({title, fields}) {
         }, {})
     );
 
-    const [submittedData, setSubmittedData] = useState({});
     const [previousData, setPreviousData] = useState({});
 
     function handleChange(e) {
@@ -21,13 +20,12 @@ function FormSection({title, fields}) {
             acc[field.name] = '';
             return acc;
         }, {}));
-        setSubmittedData({});
-        setPreviousData({});
+        onReset(fields);
     };
 
     function handleSubmit(e) {
         e.preventDefault();
-        setSubmittedData(formData);
+        onSubmit(formData);
         setPreviousData(formData);
         setFormData(fields.reduce((acc, field) => {
             acc[field.name] = '';
@@ -55,7 +53,6 @@ function FormSection({title, fields}) {
                 <button type="submit">Submit</button>
                 <button type="button" onClick={handleReset}>Reset</button>
                 <button type="button" onClick={handleEdit}>Edit</button>
-                <h1>{Object.values(submittedData).join(' ')}</h1>
             </form>
         </div>
     )
