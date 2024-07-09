@@ -2,9 +2,11 @@ import { useState } from "react";
 
 function Personal() {
     const [firstName, setFirstName] = useState(''); 
-    const [submittedFirstName, setSubmittedFirstName] = useState(''); 
     const [lastName, setLastName] = useState(''); 
+    const [submittedFirstName, setSubmittedFirstName] = useState(''); 
     const [submittedLastName, setSubmittedLastName] = useState(''); 
+    const [previousFirstName, setPreviousFirstName] = useState(''); 
+    const [previousLastName, setPreviousLastName] = useState(''); 
     
 
     function handleFirstNameChange(e) {
@@ -20,12 +22,23 @@ function Personal() {
         setSubmittedFirstName('');
         setLastName('');
         setSubmittedLastName('');
+        setPreviousFirstName('');
+        setPreviousLastName('');
     }
 
     function handleSubmit(e) {
         e.preventDefault();
         setSubmittedFirstName(firstName);
         setSubmittedLastName(lastName);
+        setPreviousFirstName(firstName);
+        setPreviousLastName(lastName);
+        setFirstName('');
+        setLastName('');
+    }
+
+    function handleEdit() {
+        setFirstName(previousFirstName);
+        setLastName(previousLastName);
     }
 
     return (
@@ -45,7 +58,7 @@ function Personal() {
             <h1>{submittedFirstName} {submittedLastName}</h1>
             <button type="submit">Submit</button>
             <button type="button" onClick={handleReset}>Reset</button>
-            <button type="button">Edit</button>
+            <button type="button" onClick={handleEdit}>Edit</button>
         </form>    
     </div>);
 }
