@@ -3,6 +3,7 @@ import FormSection from "./Form";
 import "../styles/styles.css";
 
 function App() {
+    //Create input fields that will later be used for the Form component
     const personalFields = [
         { name: 'firstName', placeholder: 'First Name'},
         { name: 'lastName', placeholder: 'Last Name'},
@@ -25,6 +26,7 @@ function App() {
         { name: 'locationOfWork', placeholder: 'Location'}
     ];
 
+    //Create an object using each input field
     const [personalData, setPersonalData] = useState(
         personalFields.reduce((acc, field) => {
             acc[field.name] = "";
@@ -46,36 +48,46 @@ function App() {
         }, {})
     );
 
+    //Create a state for submitted data for our reset and edit button features
     const [submittedData, setSubmittedData] = useState({ personal: {}, education: [], work: []});
 
+    //Update the state of the form when an input field changes
     function handleChange(e, setData, data) {
         const { name, value } = e.target;
         setData({ ...data, [name]: value});
     }
 
+    //Handle form submissions based on the section
     function handleSubmit(e, data, section) {
         e.preventDefault();
+        //Multiple arrays if section is education or work
         if (section === 'education' || section === 'work') {
             setSubmittedData((prev) => ({ ...prev, [section]: [...prev[section], data] }))
         } else {
+            //if section is personal
             setSubmittedData((prev) => ({ ...prev, [section]: data}))
         };
 
+        //Reset the form fields. Check if section is work, then education, then personal
         handleReset(section === 'work' ? workFields : (section === 'education' ? educationFields : personalFields), 
         section === 'work' ? setWorkData : (section === 'education' ? setEducationData : setPersonalData));
     }
 
+    //Handle reset button 
     function handleReset(fields, setData, section) {
+        //Reset form fields
         setData(fields.reduce((acc, field) => {
             acc[field.name] = '';
             return acc;
         }, {}));
+        //If section is education or work, remove the most recent entry
         if (section === 'education' || section === 'work') {
             setSubmittedData((prev) => ({
                 ...prev,
                 [section]: prev[section].slice(0, -1)
             }));
         } else {
+            //Otherwise it's personal section, so we remove everything
             setSubmittedData((prev) => ({
                 ...prev,
                 [section]: {}
@@ -83,8 +95,11 @@ function App() {
         }
     }
 
+    //Edit button
     function handleEdit(setData, section) {
+        //Update state of form data
         if (section === 'education' || section === 'work') {
+            //get the last entry in the stored array
             const lastEntry = submittedData[section][submittedData[section].length - 1];
             setData(lastEntry);
         } else {
@@ -93,6 +108,8 @@ function App() {
     }
 
     return (
+        //Create formsection using the form component, with submit, reset, and edit buttons
+        //for each section
         <div className="container">
             <div className="form-container">
                 <FormSection
