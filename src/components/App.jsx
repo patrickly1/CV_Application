@@ -11,17 +11,19 @@ function App() {
     ];
 
     const educationFields = [
+        { name: 'dateOfStudy', placeholder: 'Date of Study'},
+        { name: 'locationofStudy', placeholder: 'Location'},
         { name: 'school', placeholder: 'School'},
-        { name: 'program', placeholder: 'Program'},
-        { name: 'dateOfStudy', placeholder: 'Date of Study'}
+        { name: 'program', placeholder: 'Program'}
     ];
 
     const workFields =[
+        { name: 'dateOfWork', placeholder: 'Date of Work'},
+        { name: 'locationofWork', placeholder: 'Location'},
         { name: 'company', placeholder: 'Name of Company'},
         { name: 'positionTitle', placeholder: 'Title of Position'},
-        { name: 'responsibilities', placeholder: 'Main Responsibilities'},
-        { name: 'dateOfWork', placeholder: 'Date of Work'}
-    ]
+        { name: 'responsibilities', placeholder: 'Main Responsibilities'}
+    ];
 
     const [personalData, setPersonalData] = useState(
         personalFields.reduce((acc, field) => {
@@ -122,14 +124,33 @@ function App() {
                 />
             </div>
             <div className="output-container">
-                <h1>CV</h1>
-                <p>{Object.values(submittedData.personal).join(' ')}</p>
-                {submittedData.education.map((education, index) => (
-                    <p key={index}>{Object.values(education).join(' ')}</p>
-                ))}
-                {submittedData.work.map((work, index) => (
-                    <p key={index}>{Object.values(work).join(' ')}</p>
-                ))}
+                <h1 className="CV">CV</h1>
+                <div className="personalContainer">
+                    {Object.keys(submittedData.personal).map(key => (
+                        <p key={key} classname={key}>{submittedData.personal[key]}</p>
+                    ))}
+
+                </div>
+                <div className="educationContainer">
+                    {submittedData.education.length > 0 && <h2 className="educationHeader">Education</h2>}
+                    {submittedData.education.map((education, index) => (
+                        <div key={index}>
+                            {Object.keys(education).map(key => (
+                                <p key={key} className={key}>{education[key]}</p>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+                <div className="workContainer">
+                    {submittedData.work.length > 0 && <h2 className="workHeader">Work Experience</h2>}
+                    {submittedData.work.map((work, index) => (
+                        <div key={index}>
+                            {Object.keys(work).map(key => (
+                                <p key={key} className={key}>{work[key]}</p>
+                            ))}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

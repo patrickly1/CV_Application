@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-function FormSection({title, fields, formData, handleChange, handleReset, handleSubmit, handleEdit, multiple }) {    return (
+function FormSection({title, 
+    fields, 
+    formData, 
+    handleChange, 
+    handleReset, 
+    handleSubmit,
+    handleEdit, 
+}) {    
+    return (
         <div className="FormSectionContainer">
             <form onSubmit={handleSubmit}>
                 <div className="FormSectionTitle">{title}</div>
