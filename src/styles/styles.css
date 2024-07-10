@@ -167,7 +167,9 @@ body {
 }
 
 .responsibilities {
-  margin-left: 20px;
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
 }
 
 .workContainer {

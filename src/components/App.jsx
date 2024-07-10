@@ -152,7 +152,11 @@ function App() {
                             <div className="workLeftContainer">
                                 <p className="company">{work.company}</p>
                                 <p className="positionTitle">{work.positionTitle}</p>
-                                <p className="responsibilities">{work.responsibilities}</p>
+                                <ul className="responsibilities">
+                                    {work.responsibilities.split(',').map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                    ))}
+                                </ul>
                             </div>
                             <div className="workRightContainer">
                                 <p className="dateOfWork">{work.dateOfWork}</p>
