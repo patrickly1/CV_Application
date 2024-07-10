@@ -1,43 +1,6 @@
 import React, { useState } from "react";
 
-function FormSection({title, fields, onSubmit, onReset}) {
-    const [formData, setFormData] = useState(
-        fields.reduce((acc, field) => {
-            acc[field.name] = '';
-            return acc;
-        }, {})
-    );
-
-    const [previousData, setPreviousData] = useState({});
-
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value}); 
-    };
-
-    function handleReset(e) {
-        setFormData(fields.reduce((acc, field) => {
-            acc[field.name] = '';
-            return acc;
-        }, {}));
-        onReset(fields);
-    };
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        onSubmit(formData);
-        setPreviousData(formData);
-        setFormData(fields.reduce((acc, field) => {
-            acc[field.name] = '';
-            return acc;
-        }, {}));
-    }
-
-    function handleEdit() {
-        setFormData(previousData);
-    }
-
-    return (
+function FormSection({title, fields, formData, handleChange, handleReset, handleSubmit, handleEdit, multiple }) {    return (
         <div className="FormSectionContainer">
             <form onSubmit={handleSubmit}>
                 <div className="FormSectionTitle">{title}</div>
@@ -51,7 +14,7 @@ function FormSection({title, fields, onSubmit, onReset}) {
                     />
                 ))}
                 <button type="submit">Submit</button>
-                <button type="button" onClick={handleReset}>Reset</button>
+                <button type="button" onClick={() => handleReset(fields)}>Reset</button>
                 <button type="button" onClick={handleEdit}>Edit</button>
             </form>
         </div>
