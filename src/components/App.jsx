@@ -22,7 +22,7 @@ function App() {
         { name: 'positionTitle', placeholder: 'Title of Position'},
         { name: 'responsibilities', placeholder: 'Main Responsibilities'},
         { name: 'dateOfWork', placeholder: 'Date of Work'},
-        { name: 'locationofWork', placeholder: 'Location'}
+        { name: 'locationOfWork', placeholder: 'Location'}
     ];
 
     const [personalData, setPersonalData] = useState(
@@ -148,15 +148,18 @@ function App() {
                 <div className="workContainer">
                     {submittedData.work.length > 0 && <h2 className="workHeader">Work Experience</h2>}
                     {submittedData.work.map((work, index) => (
-                        <div key={index}>
-                            {Object.keys(work).map(key => (
-                                <p key={key} className={key}>{work[key]}</p>
-                            ))}
+                        <div key={index} className="workDetails">
+                            <div className="workLeftContainer">
+                                <p className="company">{work.company}</p>
+                                <p className="positionTitle">{work.positionTitle}</p>
+                                <p className="responsibilities">{work.responsibilities}</p>
+                            </div>
+                            <div className="workRightContainer">
+                                <p className="dateOfWork">{work.dateOfWork}</p>
+                                <p className="locationOfWork">{work.locationOfWork}</p>
+                            </div>
                         </div>
                     ))}
-                    <div className="dateTime">
-
-                    </div>
                 </div>
             </div>
         </div>
