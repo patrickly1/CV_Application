@@ -11,18 +11,18 @@ function App() {
     ];
 
     const educationFields = [
-        { name: 'dateOfStudy', placeholder: 'Date of Study'},
-        { name: 'locationofStudy', placeholder: 'Location'},
         { name: 'school', placeholder: 'School'},
-        { name: 'program', placeholder: 'Program'}
+        { name: 'program', placeholder: 'Program'},
+        { name: 'dateOfStudy', placeholder: 'Date of Study'},
+        { name: 'locationOfStudy', placeholder: 'Location'}
     ];
 
     const workFields =[
-        { name: 'dateOfWork', placeholder: 'Date of Work'},
-        { name: 'locationofWork', placeholder: 'Location'},
         { name: 'company', placeholder: 'Name of Company'},
         { name: 'positionTitle', placeholder: 'Title of Position'},
-        { name: 'responsibilities', placeholder: 'Main Responsibilities'}
+        { name: 'responsibilities', placeholder: 'Main Responsibilities'},
+        { name: 'dateOfWork', placeholder: 'Date of Work'},
+        { name: 'locationofWork', placeholder: 'Location'}
     ];
 
     const [personalData, setPersonalData] = useState(
@@ -124,20 +124,24 @@ function App() {
                 />
             </div>
             <div className="output-container">
-                <h1 className="CV">CV</h1>
+                <h1 className="fullName">{submittedData.personal.firstName} {submittedData.personal.lastName}</h1>
                 <div className="personalContainer">
-                    {Object.keys(submittedData.personal).map(key => (
-                        <p key={key} classname={key}>{submittedData.personal[key]}</p>
-                    ))}
-
+                    <p className="email">{submittedData.personal.email}</p>
+                    <p>{submittedData.personal.email && submittedData.personal.phoneNumber && <p>&nbsp;|&nbsp;</p>}</p>
+                    <p className="phoneNumber">{submittedData.personal.phoneNumber}</p>
                 </div>
                 <div className="educationContainer">
                     {submittedData.education.length > 0 && <h2 className="educationHeader">Education</h2>}
                     {submittedData.education.map((education, index) => (
-                        <div key={index}>
-                            {Object.keys(education).map(key => (
-                                <p key={key} className={key}>{education[key]}</p>
-                            ))}
+                        <div key={index} className="educationDetails">
+                            <div className="schoolContainer">
+                                <p className="school">{education.school}</p>
+                                <p className="dateOfStudy">{education.dateOfStudy}</p>
+                            </div>
+                            <div className="schoolContainer">
+                                <p className="program">{education.program}</p>
+                                <p className="locationOfStudy">{education.locationOfStudy}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -150,6 +154,9 @@ function App() {
                             ))}
                         </div>
                     ))}
+                    <div className="dateTime">
+
+                    </div>
                 </div>
             </div>
         </div>
